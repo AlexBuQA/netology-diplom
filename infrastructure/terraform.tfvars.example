@@ -1,0 +1,5 @@
+yc_token       = "your_oauth_or_iam_token"
+yc_cloud_id    = "your_cloud_id"
+yc_folder_id   = "your_folder_id"
+ssh_public_key = "ssh-ed25519 AAAA...your_public_key... user@host"
+# ycr_name     = "abuzhor-registry"   # раскомментируйте, если хотите другое имя реестра

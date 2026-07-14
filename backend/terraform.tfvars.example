@@ -1,0 +1,6 @@
+yc_token      = "your_oauth_or_iam_token"
+yc_cloud_id   = "your_cloud_id"
+yc_folder_id  = "your_folder_id"
+sa_access_key = "your_service_account_access_key"
+sa_secret_key = "your_service_account_secret_key"
+# bucket_name = "abuzhor-diplom-tfstate"   # раскомментируйте, если хотите своё имя бакета

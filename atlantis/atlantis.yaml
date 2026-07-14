@@ -1,0 +1,144 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: terraformrc
+  namespace: atlantis
+data:
+  # Из-за санкций registry.terraform.io недоступен из РФ.
+  # Перенаправляем скачивание провайдеров на зеркало Yandex Cloud.
+  .terraformrc: |
+    provider_installation {
+      network_mirror {
+        url = "https://terraform-mirror.yandexcloud.net"
+      }
+      direct {
+        exclude = ["registry.terraform.io/*"]
+      }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: atlantis
+  namespace: atlantis
+  labels:
+    app: atlantis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: atlantis
+  template:
+    metadata:
+      labels:
+        app: atlantis
+    spec:
+      containers:
+      - name: atlantis
+        image: ghcr.io/runatlantis/atlantis:v0.34.0
+        env:
+          - name: ATLANTIS_REPO_ALLOWLIST
+            valueFrom:
+              secretKeyRef:
+                name: atlantis-secrets
+                key: repo-allowlist
+          - name: ATLANTIS_GH_USER
+            valueFrom:
+              secretKeyRef:
+                name: atlantis-secrets
+                key: github-user
+          - name: ATLANTIS_GH_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: atlantis-secrets
+                key: github-token
+          - name: ATLANTIS_GH_WEBHOOK_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: atlantis-secrets
+                key: webhook-secret
+          - name: YC_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: atlantis-secrets
+                key: yc-token
+          - name: YC_CLOUD_ID
+            valueFrom:
+              secretKeyRef:
+                name: atlantis-secrets
+                key: yc-cloud-id
+          - name: YC_FOLDER_ID
+            valueFrom:
+              secretKeyRef:
+                name: atlantis-secrets
+                key: yc-folder-id
+          # Ключи для доступа к S3-бэкенду (Object Storage).
+          # Terraform s3 backend читает их из стандартных AWS_* переменных.
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: atlantis-secrets
+                key: s3-access-key
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: atlantis-secrets
+                key: s3-secret-key
+          - name: AWS_REGION
+            value: "ru-central1"
+          - name: ATLANTIS_PORT
+            value: "4141"
+          - name: AWS_ENDPOINT
+            value: "storage.yandexcloud.net"
+          - name: AWS_EC2_METADATA_DISABLED
+            value: "true"
+          # Переменные TF_VAR_* передаются в terraform как значения переменных.
+          - name: TF_VAR_yc_token
+            valueFrom:
+              secretKeyRef:
+                name: atlantis-secrets
+                key: yc-token
+          - name: TF_VAR_yc_cloud_id
+            valueFrom:
+              secretKeyRef:
+                name: atlantis-secrets
+                key: yc-cloud-id
+          - name: TF_VAR_yc_folder_id
+            valueFrom:
+              secretKeyRef:
+                name: atlantis-secrets
+                key: yc-folder-id
+          - name: TF_VAR_ssh_public_key
+            valueFrom:
+              secretKeyRef:
+                name: atlantis-secrets
+                key: ssh-public-key
+        ports:
+        - name: http
+          containerPort: 4141
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+        volumeMounts:
+        - name: terraformrc
+          mountPath: /home/atlantis/.terraformrc
+          subPath: .terraformrc
+      volumes:
+      - name: terraformrc
+        configMap:
+          name: terraformrc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: atlantis
+  namespace: atlantis
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 4141
+    nodePort: 32001
+  selector:
+    app: atlantis

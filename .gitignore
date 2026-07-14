@@ -1,0 +1,19 @@
+# Terraform
+**/.terraform/*
+**/*.tfstate
+**/*.tfstate.*
+**/*.tfvars
+**/.terraform.lock.hcl
+**/backend.hcl
+**/key.json
+
+# Ansible
+**/inventory/mycluster/credentials.yml
+**/secrets.ini
+
+# Atlantis
+**/secrets.yaml
+
+# Прочее
+*.retry
+.DS_Store

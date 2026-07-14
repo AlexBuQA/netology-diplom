@@ -23,3 +23,25 @@ spec:
         image: cr.yandex/crpfdk2dgogep9irkq8g/test-nginx-app:latest
         ports:
         - containerPort: 80
+        # Пробы используют эндпоинт /healthz из nginx.conf.
+        # readiness: под не получит трафик, пока не будет готов —
+        # это делает выкатку новой версии по-настоящему безопасной.
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 20
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "128Mi"

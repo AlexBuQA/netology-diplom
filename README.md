@@ -29,10 +29,10 @@
 
 - Репозиторий с инфраструктурой (этот репозиторий): `https://github.com/AlexBuQA/netology-diplom`
 - Репозиторий тестового приложения: `https://github.com/AlexBuQA/test-nginx-app`
-- Собранный Docker-образ: `cr.yandex/<REGISTRY_ID>/test-nginx-app:latest`
-- Тестовое приложение: `http://<NODE_PUBLIC_IP>/app`
-- Grafana: `http://<NODE_PUBLIC_IP>/` — логин `admin`, пароль `prom-operator`
-- Пример pull request с комментариями Atlantis: `https://github.com/AlexBuQA/netology-diplom/pull/
+- Собранный Docker-образ: `cr.yandex/crpfdk2dgogep9irkq8g/test-nginx-app:latest`
+- Тестовое приложение: `http://89.169.187.246/app`
+- Grafana: `http://http://89.169.187.246/` — логин `admin`, пароль `prom-operator`
+- Пример pull request с комментариями Atlantis: `https://github.com/AlexBuQA/netology-diplom/pull/1
 - Пайплайны CI/CD: `https://github.com/AlexBuQA/test-nginx-app/actions`
 
 ---
@@ -336,7 +336,7 @@ Webhook-secret — случайная строка из 32 символов.
 
 **Шаг 2. Webhook в GitHub.** В настройках репозитория `netology-diplom` →
 Webhooks → Add webhook:
-- Payload URL: `http://<NODE_PUBLIC_IP>:32001/events`
+- Payload URL: `http://http://89.169.187.246:32001/events`
 - Content type: `application/json`
 - Secret: значение `webhook-secret`
 - События: Pull requests, Pushes, Issue comments.
@@ -412,10 +412,10 @@ Workflow `deploy.yaml` собирает образ `:v1.1`, пушит его и
 
 ---
 
-## Что необходимо для сдачи задания
+## Чек-лист по заданию
 
 1. ✅ Репозиторий с конфигурацией Terraform, готовность создать ресурсы с нуля.
-2. ✅ Пример pull request с комментариями Atlantis (или скриншоты CI/CD-terraform pipeline).
+2. ✅ Пример pull request с комментариями Atlantis (скриншоты CI/CD-terraform pipeline).
 3. ✅ Репозиторий с конфигурацией Ansible (Kubespray) — inventory в папке `kubespray`.
 4. ✅ Репозиторий с Dockerfile тестового приложения и ссылка на собранный образ.
 5. ✅ Репозиторий с конфигурацией Kubernetes-кластера (`k8s-configs`).

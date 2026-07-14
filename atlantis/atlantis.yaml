@@ -33,6 +33,8 @@ spec:
       labels:
         app: atlantis
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: worker1
       containers:
       - name: atlantis
         image: ghcr.io/runatlantis/atlantis:v0.34.0

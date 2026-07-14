@@ -300,8 +300,8 @@ kubectl get pods -n ingress-nginx -o wide
 ```
 
 Проверяем:
-- Grafana — `http://<NODE_PUBLIC_IP>/` (логин `admin`, пароль `prom-operator`);
-- Приложение — `http://<NODE_PUBLIC_IP>/app`.
+- Grafana — `http://89.169.187.246/` (логин `admin`, пароль `prom-operator`);
+- Приложение — `http://89.169.187.246/app`.
 
 > 📸 **Скриншот:** Grafana с дашбордами по состоянию кластера.
 > 📸 **Скриншот:** открытая страница приложения по адресу `/app`.

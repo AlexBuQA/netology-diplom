@@ -27,14 +27,12 @@
 
 ## Результаты работы — репозитории и ссылки
 
-> ⚠️ Заполните ссылки и данные доступа после развёртывания — это то, что проверяет преподаватель.
-
 - Репозиторий с инфраструктурой (этот репозиторий): `https://github.com/AlexBuQA/netology-diplom`
 - Репозиторий тестового приложения: `https://github.com/AlexBuQA/test-nginx-app`
 - Собранный Docker-образ: `cr.yandex/<REGISTRY_ID>/test-nginx-app:latest`
 - Тестовое приложение: `http://<NODE_PUBLIC_IP>/app`
 - Grafana: `http://<NODE_PUBLIC_IP>/` — логин `admin`, пароль `prom-operator`
-- Пример pull request с комментариями Atlantis: `https://github.com/AlexBuQA/netology-diplom/pull/<N>`
+- Пример pull request с комментариями Atlantis: `https://github.com/AlexBuQA/netology-diplom/pull/
 - Пайплайны CI/CD: `https://github.com/AlexBuQA/test-nginx-app/actions`
 
 ---

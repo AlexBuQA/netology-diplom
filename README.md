@@ -34,7 +34,7 @@
 - Собранный Docker-образ: `cr.yandex/crpfdk2dgogep9irkq8g/test-nginx-app:latest`
 - Тестовое приложение: `http://89.169.187.246/app`
 - Grafana: `http://http://89.169.187.246/` — логин `admin`, пароль `prom-operator`
-- Пример pull request с комментариями Atlantis: `https://github.com/AlexBuQA/netology-diplom/pull/1
+- Пример pull request с комментариями Atlantis: `https://github.com/AlexBuQA/netology-diplom/pull/1`
 - Пайплайны CI/CD: `https://github.com/AlexBuQA/test-nginx-app/actions`
 
 ---
